@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,29 +14,27 @@
     </head>
 
     <div class="container">
-        <h2>Products</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Serial number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${products}" var="product">
+        <h2>Add product</h2>
+        <form:form action="/etnshop/product/add" method="post" commandName="product">
+            <table class="table">
+                <tbody>
                     <tr>
-                        <td>${product.id}</td>
-                        <td>${product.name}</td>
-                        <td>${product.serialNumber}</td>
-                        <td><a class="btn"  href="/etnshop/product/edit/${product.id}" role="button">Edit</a></td>
-                    </tr>	
-                </c:forEach>
-            </tbody>
-        </table>
-        
-        <a class="btn btn-secondary btn-lg"  href="/etnshop/product/add" role="button">Add product</a>
-        
+                        <th>Name</th>
+                        <td><form:input path="name"/></td>
+                    </tr>
+                    <tr>
+                        <th>Serial number</th>
+                        <td><form:input path="serialNumber"/></td>
+                    </tr>
+                    <tr>
+                        <td><a class="btn"  href="/etnshop/product/list" role="button">cancel</a></td>
+                        <td><input class="btn" type="submit" value="confirm"/></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </form:form>
+
         <hr>
         <footer>
             <p>&copy; Etnetera a.s. 2015</p>

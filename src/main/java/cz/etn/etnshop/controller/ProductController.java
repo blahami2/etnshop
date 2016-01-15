@@ -26,29 +26,31 @@ public class ProductController {
         modelAndView.addObject( "count", productService.getProducts().size() );
         modelAndView.addObject( "products", productService.getProducts() );
         return modelAndView;
-    }    
-    
-    @RequestMapping( "/add" )
+    }
+
+    @RequestMapping( value = "/add", method = RequestMethod.GET )
     public ModelAndView add() {
         ModelAndView modelAndView = new ModelAndView( "product/add" );
-        System.out.println( "Count:" + productService.getProducts().size() );
-        modelAndView.addObject( "test", "mytest" );
-        modelAndView.addObject( "count", productService.getProducts().size() );
-        modelAndView.addObject( "products", productService.getProducts() );
+        modelAndView.addObject( "product", new Product() );
         return modelAndView;
     }
 
-    @RequestMapping( value = "/edit/{id}", method=RequestMethod.GET )
-    public ModelAndView edit(@PathVariable int id) {
+    @RequestMapping( value = "/add", method = RequestMethod.POST )
+    public ModelAndView add( @ModelAttribute( "product" ) Product product ) {
+        productService.saveProduct( product );
+        return new ModelAndView( "redirect:" + "list" );
+    }
+
+    @RequestMapping( value = "/edit/{id}", method = RequestMethod.GET )
+    public ModelAndView edit( @PathVariable int id ) {
         ModelAndView modelAndView = new ModelAndView( "product/edit" );
-        System.out.println( "Count:" + productService.getProducts().size() );
-        modelAndView.addObject( "product", productService.getProduct(id) );
+        modelAndView.addObject( "product", productService.getProduct( id ) );
         return modelAndView;
-    }    
-    
-    @RequestMapping( value = "/edit" )
-    public ModelAndView edit(@ModelAttribute("product") Product product) {
+    }
+
+    @RequestMapping( value = "/edit", method = RequestMethod.POST )
+    public ModelAndView edit( @ModelAttribute( "product" ) Product product ) {
         productService.updateProduct( product );
-        return new ModelAndView("redirect:" + "list");
+        return new ModelAndView( "redirect:" + "list" );
     }
 }
