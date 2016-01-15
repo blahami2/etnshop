@@ -10,6 +10,7 @@ import cz.etn.etnshop.service.ProductService;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping( "/product" )
@@ -25,6 +26,16 @@ public class ProductController {
         modelAndView.addObject( "test", "mytest" );
         modelAndView.addObject( "count", productService.getProducts().size() );
         modelAndView.addObject( "products", productService.getProducts() );
+        return modelAndView;
+    }
+
+    @RequestMapping( value = "/list", method = RequestMethod.GET, params = { "search" } )
+    public ModelAndView list( @RequestParam( "search" ) String text ) {
+        ModelAndView modelAndView = new ModelAndView( "product/list" );
+        System.out.println( "Count:" + productService.getProducts().size() );
+        modelAndView.addObject( "test", "mytest" );
+        modelAndView.addObject( "count", productService.getProducts().size() );
+        modelAndView.addObject( "products", productService.searchProducts( text ) );
         return modelAndView;
     }
 

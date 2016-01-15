@@ -13,6 +13,12 @@
     </head>
 
     <div class="container">
+        <div id="search" style="float: right;">
+            <form action="/etnshop/product/list" method="get">
+                <input type="text" name="search"/>
+                <input type="submit" value="search"/>
+            </form>
+        </div>
         <h2>Products</h2>
         <table class="table">
             <thead>

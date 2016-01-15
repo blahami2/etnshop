@@ -14,7 +14,10 @@ public interface ProductDao {
 
     @Transactional( readOnly = true )
     Product getProduct( int productId );
-    
+
+    @Transactional( readOnly = true )
+    public List<Product> searchProducts( String text );
+
     @Transactional( readOnly = false )
     void deleteProduct( int productId );
 

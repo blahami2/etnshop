@@ -15,6 +15,9 @@ public interface ProductService {
     List<Product> getProducts();
 
     @Transactional( readOnly = true )
+    List<Product> searchProducts( String text );
+
+    @Transactional( readOnly = true )
     Product getProduct( int productId );
 
     @Transactional( readOnly = false )
