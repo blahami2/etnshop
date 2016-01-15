@@ -6,34 +6,37 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
-@Repository("productDao")
+@Repository( "productDao" )
 public class ProductDaoImpl extends AbstractDao implements ProductDao {
 
-	@Override
-	public void saveProduct(Product product) {
-		persist(product);
-	}
+    @Override
+    public void saveProduct( Product product ) {
+        persist( product );
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Product> getProducts() {
-		 Criteria criteria = getSession().createCriteria(Product.class);
-	     return (List<Product>) criteria.list();
-	}
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public List<Product> getProducts() {
+        Criteria criteria = getSession().createCriteria( Product.class );
+        return (List<Product>) criteria.list();
+    }
 
-	@Override
-	public void deleteProduct(int productId) {
-		Query query = getSession().createSQLQuery("delete from Product where id = :id");
-        query.setInteger("id", productId);
+    @Override
+    public void deleteProduct( int productId ) {
+        Query query = getSession().createSQLQuery( "delete from Product where id = :id" );
+        query.setInteger( "id", productId );
         query.executeUpdate();
-	}
+    }
 
+    @Override
+    public void updateProduct( Product product ) {
+        getSession().update( product );
 
-	@Override
-	public void updateProduct(Product product) {
-		getSession().update(product);
-		
-	}
-	
+    }
+
+    @Override
+    public Product getProduct( int productId ) {
+        return (Product) getSession().get( Product.class, productId);
+    }
 
 }
